@@ -46,6 +46,7 @@ Should have same signature as `completing-read`."
   '((c-mode . "c")
     (c++-mode . "cpp")
     (go-mode . "go")
+    (elisp-mode . "elisp")
     (java-mode . "java")
     (javascript-mode . "javascript")
     (kotlin-mode . "kotlin")
