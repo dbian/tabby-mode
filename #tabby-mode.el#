@@ -76,7 +76,7 @@ When the request completes, CALLBACK will be invoked with the response."
   (let* ((request (tabby--completions-request lang prefix suffix))
          (url-request-method "POST")
          (url-request-extra-headers `(("Content-Type" . "application/json")))
-         (url-request-data (json-encode request)))
+         (url-request-data ( (json-encode request))))
     (url-retrieve (tabby--completions-url)
                   (lambda (_status)
                     (goto-char url-http-end-of-headers)
@@ -112,8 +112,7 @@ See https://code.visualstudio.com/docs/languages/identifiers."
       (message "Unable to determine language for current buffer."))))
 
 (define-minor-mode tabby-mode
-  "A minor mode for the Tabby AI coding assistant."
-  :keymap '((["C-<tab>"] . tabby-complete)))
+  "A minor mode for the Tabby AI coding assistant.")
 
 (provide 'tabby-mode)
 
