@@ -76,7 +76,7 @@ When the request completes, CALLBACK will be invoked with the response."
   (let* ((request (tabby--completions-request lang prefix suffix))
          (url-request-method "POST")
          (url-request-extra-headers `(("Content-Type" . "application/json")))
-         (url-request-data (json-encode request)))
+         (url-request-data (encode-coding-string (json-encode request) 'utf-8)))
     (url-retrieve (tabby--completions-url)
                   (lambda (_status)
                     (goto-char url-http-end-of-headers)
