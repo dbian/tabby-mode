@@ -104,9 +104,15 @@ See https://code.visualstudio.com/docs/languages/identifiers."
   (when (not tabby-api-url)
     (error "Please configure the URL for your Tabby server. See customizable variable `tabby-api-url`"))
   (let* ((lang (tabby--determine-language))
-         (prefix (buffer-substring (point-min) (point)))
-         (suffix (unless (eobp)
-                   (buffer-substring (+ (point) 1) (point-max)))))
+	 (selected-text (buffer-substring-no-properties (region-beginning) (region-end)))
+         (prefix (if (> (length selected-text) 1)
+                     selected-text
+                   (buffer-substring (point-min) (point))))
+	 (suffix (if (> (length selected-text) 1) ""
+		   (unless (eobp)
+		     (buffer-substring (+ (point) 1) (point-max)))
+		     ))
+         )
     (if lang
         (tabby--get-completions (current-buffer) lang prefix suffix 'tabby--handle-completion-response)
       (message "Unable to determine language for current buffer."))))
